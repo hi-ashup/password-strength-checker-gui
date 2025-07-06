@@ -81,6 +81,9 @@ const App = () => {
   const useSuggestedPassword = (suggestedPassword) => {
     setPassword(suggestedPassword);
   };
+
+  // Analyze password with debouncing
+  useEffect(() => {
     const analyzePassword = async () => {
       if (!password.trim()) {
         setAnalysis(null);
