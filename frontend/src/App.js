@@ -7,6 +7,9 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [tips, setTips] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
+  const [copiedIndex, setCopiedIndex] = useState(null);
+  const [loadingSuggestions, setLoadingSuggestions] = useState(false);
 
   const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
