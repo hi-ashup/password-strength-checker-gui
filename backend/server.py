@@ -160,8 +160,93 @@ async def analyze_password(request: PasswordRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/api/password-tips")
-async def get_password_tips():
+def generate_strong_passwords(count: int = 3) -> List[str]:
+    """
+    Generate strong passwords that meet all security criteria
+    """
+    passwords = []
+    
+    # Password components
+    uppercase = string.ascii_uppercase
+    lowercase = string.ascii_lowercase
+    digits = string.digits
+    special_chars = "!@#$%^&*(),.?\":{}|<>"
+    
+    # Words for readable passwords
+    words = [
+        "Secure", "Strong", "Power", "Magic", "Bright", "Swift", "Smart", "Bold", 
+        "Clever", "Quick", "Mighty", "Sharp", "Brave", "Prime", "Elite", "Super",
+        "Thunder", "Lightning", "Phoenix", "Dragon", "Tiger", "Eagle", "Lion", "Wolf"
+    ]
+    
+    for _ in range(count):
+        # Strategy 1: Word-based password (more memorable)
+        if random.choice([True, False]):
+            word1 = random.choice(words)
+            word2 = random.choice(words)
+            # Ensure mixed case
+            word1 = word1.capitalize()
+            word2 = word2.lower()
+            
+            # Add numbers and special chars
+            number = ''.join(random.choices(digits, k=random.randint(3, 4)))
+            special = ''.join(random.choices(special_chars, k=random.randint(2, 3)))
+            
+            password = f"{word1}{word2}{number}{special}"
+        else:
+            # Strategy 2: Random secure password
+            length = random.randint(12, 16)
+            
+            # Ensure at least one of each required character type
+            password_chars = []
+            password_chars.extend(random.choices(uppercase, k=random.randint(2, 3)))
+            password_chars.extend(random.choices(lowercase, k=random.randint(3, 4)))
+            password_chars.extend(random.choices(digits, k=random.randint(2, 3)))
+            password_chars.extend(random.choices(special_chars, k=random.randint(2, 3)))
+            
+            # Fill remaining length with random characters
+            remaining = length - len(password_chars)
+            if remaining > 0:
+                all_chars = uppercase + lowercase + digits + special_chars
+                password_chars.extend(random.choices(all_chars, k=remaining))
+            
+            # Shuffle the password
+            random.shuffle(password_chars)
+            password = ''.join(password_chars)
+        
+        passwords.append(password)
+    
+    return passwords
+
+@app.get("/api/generate-passwords")
+async def generate_passwords(count: int = 3):
+    """
+    Generate strong password suggestions
+    """
+    try:
+        if count < 1 or count > 10:
+            count = 3
+        
+        passwords = generate_strong_passwords(count)
+        
+        # Verify all generated passwords are strong
+        verified_passwords = []
+        for password in passwords:
+            analysis = analyze_password_strength(password)
+            if analysis.strength == "strong":
+                verified_passwords.append({
+                    "password": password,
+                    "score": analysis.score,
+                    "length": len(password)
+                })
+        
+        return {
+            "suggestions": verified_passwords,
+            "count": len(verified_passwords)
+        }
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
     """
     Get general password security tips
     """
