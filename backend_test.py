@@ -1,6 +1,7 @@
 import requests
 import unittest
 import json
+import re
 
 class PasswordStrengthAPITester:
     def __init__(self, base_url="https://5c54b8c0-8140-458b-8d5f-aa08a1a631d8.preview.emergentagent.com"):
