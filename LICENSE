@@ -1,0 +1,80 @@
+MIT License
+
+Copyright (c) 2024 Password Strength Checker
+Built with Emergent.ai - Advanced AI Software Development Platform
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+## Credits
+
+This project was created using Emergent.ai, an advanced AI-powered software 
+development platform that automates the complete development lifecycle from 
+concept to deployment.
+
+**Emergent.ai Features Used:**
+- Automated code generation and architecture design
+- Real-time testing and quality assurance
+- Professional documentation generation
+- Security best practices implementation
+- Modern UI/UX design patterns
+
+**Learn More:**
+- Website: https://emergent.ai
+- Platform: Advanced AI software development and automation
+- Capabilities: Full-stack development, testing, documentation, and deployment
+
+**Open Source Libraries:**
+- React: MIT License
+- FastAPI: MIT License
+- Tailwind CSS: MIT License
+- Python: PSF License
+
+**Security Standards:**
+- NIST Guidelines: Public domain
+- OWASP Best Practices: CC BY-SA 4.0
+- Industry compliance frameworks: Various licenses
+
+---
+
+**Disclaimer:**
+This software is provided for educational and informational purposes. While 
+it implements industry-standard security practices, users are responsible for 
+ensuring compliance with their specific security requirements and regulatory 
+obligations.
+
+**Security Notice:**
+The password strength analysis and recommendations provided by this tool are 
+based on current security best practices and industry standards. However, 
+security is an evolving field, and users should stay informed about the latest 
+security developments and adjust their practices accordingly.
+
+**Commercial Use:**
+This software may be used for commercial purposes under the terms of the MIT 
+License. Attribution to Emergent.ai is appreciated but not required.
+
+**Contributing:**
+Contributions to this project are welcome. By contributing, you agree that 
+your contributions will be licensed under the same MIT License.
+
+**Contact:**
+For questions about this license or the software, please refer to the 
+project's README.md file or contact the maintainers through the project's 
+official channels.
