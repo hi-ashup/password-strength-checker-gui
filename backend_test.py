@@ -133,6 +133,80 @@ class PasswordStrengthAPITester:
             200,
             data={"password": "ThisIsAVeryLongPasswordThatShouldStillBeAnalyzedCorrectly!2024@"}
         )
+        
+    def test_generate_passwords(self):
+        """Test the password generation endpoint"""
+        success, data = self.run_test(
+            "Generate Passwords",
+            "GET",
+            "api/generate-passwords",
+            200
+        )
+        
+        if success:
+            suggestions = data.get('suggestions', [])
+            count = data.get('count', 0)
+            
+            # Check if we got the expected number of suggestions (default is 3)
+            if count == 3 and len(suggestions) == 3:
+                print(f"  - Successfully generated {count} password suggestions")
+                
+                # Verify all passwords are strong
+                all_strong = True
+                for suggestion in suggestions:
+                    # Check if password exists and has a score
+                    if 'password' not in suggestion or 'score' not in suggestion:
+                        all_strong = False
+                        print(f"  - ❌ Invalid suggestion format: {suggestion}")
+                        continue
+                        
+                    password = suggestion['password']
+                    score = suggestion['score']
+                    
+                    # Verify password meets criteria for strong passwords
+                    has_uppercase = bool(re.search(r'[A-Z]', password))
+                    has_lowercase = bool(re.search(r'[a-z]', password))
+                    has_numbers = bool(re.search(r'[0-9]', password))
+                    has_special = bool(re.search(r'[!@#$%^&*(),.?":{}|<>]', password))
+                    has_length = len(password) >= 12
+                    
+                    if not (has_uppercase and has_lowercase and has_numbers and has_special and has_length and score >= 80):
+                        all_strong = False
+                        print(f"  - ❌ Generated password doesn't meet strong criteria: {password}")
+                        
+                if all_strong:
+                    print("  - ✅ All generated passwords meet strong criteria")
+                    self.tests_passed += 1
+                else:
+                    print("  - ❌ Some generated passwords don't meet strong criteria")
+                    self.tests_run += 1
+            else:
+                print(f"  - ❌ Expected 3 suggestions, got {count}")
+                self.tests_run += 1
+                
+        return success, data
+        
+    def test_generate_passwords_custom_count(self):
+        """Test the password generation endpoint with custom count"""
+        success, data = self.run_test(
+            "Generate Passwords (Custom Count)",
+            "GET",
+            "api/generate-passwords?count=5",
+            200
+        )
+        
+        if success:
+            suggestions = data.get('suggestions', [])
+            count = data.get('count', 0)
+            
+            if count == 5 and len(suggestions) == 5:
+                print(f"  - Successfully generated {count} password suggestions")
+                self.tests_passed += 1
+            else:
+                print(f"  - ❌ Expected 5 suggestions, got {count}")
+                self.tests_run += 1
+                
+        return success, data
 
     def run_all_tests(self):
         """Run all tests and print results"""
