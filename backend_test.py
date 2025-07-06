@@ -243,6 +243,21 @@ class PasswordStrengthAPITester:
         self.test_analyze_unicode_password()
         self.test_analyze_very_long_password()
         
+        # Test password generation
+        print("\n🔐 Testing Password Generation Features...")
+        success, gen_data = self.test_generate_passwords()
+        if success:
+            print(f"  - Generated {len(gen_data.get('suggestions', []))} password suggestions")
+            # Print a sample of the first generated password
+            if gen_data.get('suggestions'):
+                first_pwd = gen_data['suggestions'][0]
+                print(f"  - Sample generated password: {first_pwd.get('password', 'N/A')}")
+                print(f"  - Sample password score: {first_pwd.get('score', 'N/A')}")
+                print(f"  - Sample password length: {first_pwd.get('length', 'N/A')}")
+        
+        # Test custom count password generation
+        self.test_generate_passwords_custom_count()
+        
         # Print summary
         print(f"\n📊 Tests passed: {self.tests_passed}/{self.tests_run}")
         return self.tests_passed == self.tests_run
