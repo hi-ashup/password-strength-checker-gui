@@ -268,6 +268,61 @@ const App = () => {
                     </ul>
                   </div>
                 )}
+
+                {/* Password Suggestions for Weak/Moderate Passwords */}
+                {analysis && (analysis.strength === 'weak' || analysis.strength === 'moderate') && (
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-3">
+                      🔑 Try These Strong Passwords
+                    </h3>
+                    
+                    {loadingSuggestions ? (
+                      <div className="text-center py-4">
+                        <div className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-indigo-600"></div>
+                        <p className="text-sm text-gray-600 mt-2">Generating suggestions...</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-3">
+                        {suggestions.map((suggestion, index) => (
+                          <div key={index} className="flex items-center justify-between p-3 bg-green-50 border border-green-200 rounded-lg">
+                            <div className="flex-1">
+                              <div className="font-mono text-sm text-gray-800 bg-white px-2 py-1 rounded border">
+                                {suggestion.password}
+                              </div>
+                              <div className="text-xs text-green-600 mt-1">
+                                Score: {suggestion.score}% • Length: {suggestion.length} chars
+                              </div>
+                            </div>
+                            <div className="flex space-x-2 ml-4">
+                              <button
+                                onClick={() => copyToClipboard(suggestion.password, index)}
+                                className={`px-3 py-1 text-xs font-medium rounded-md transition-all duration-200 ${
+                                  copiedIndex === index
+                                    ? 'bg-green-600 text-white'
+                                    : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+                                }`}
+                              >
+                                {copiedIndex === index ? 'Copied ✓' : 'Copy'}
+                              </button>
+                              <button
+                                onClick={() => useSuggestedPassword(suggestion.password)}
+                                className="px-3 py-1 text-xs font-medium bg-gray-600 hover:bg-gray-700 text-white rounded-md transition-colors duration-200"
+                              >
+                                Use
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                        
+                        {suggestions.length === 0 && !loadingSuggestions && (
+                          <div className="text-center py-4 text-gray-500">
+                            <p className="text-sm">Unable to generate suggestions at the moment.</p>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             )}
 
