@@ -27,8 +27,60 @@ const App = () => {
     fetchTips();
   }, [backendUrl]);
 
-  // Analyze password with debouncing
+  // Fetch password suggestions when password is weak or moderate
   useEffect(() => {
+    const fetchSuggestions = async () => {
+      if (analysis && (analysis.strength === 'weak' || analysis.strength === 'moderate')) {
+        setLoadingSuggestions(true);
+        try {
+          const response = await fetch(`${backendUrl}/api/generate-passwords?count=3`);
+          const data = await response.json();
+          setSuggestions(data.suggestions || []);
+        } catch (error) {
+          console.error('Error fetching password suggestions:', error);
+          setSuggestions([]);
+        } finally {
+          setLoadingSuggestions(false);
+        }
+      } else {
+        setSuggestions([]);
+      }
+    };
+
+    fetchSuggestions();
+  }, [analysis, backendUrl]);
+
+  // Copy password to clipboard
+  const copyToClipboard = async (password, index) => {
+    try {
+      await navigator.clipboard.writeText(password);
+      setCopiedIndex(index);
+      
+      // Reset the copied state after 2 seconds
+      setTimeout(() => {
+        setCopiedIndex(null);
+      }, 2000);
+    } catch (error) {
+      console.error('Failed to copy password:', error);
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = password;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      
+      setCopiedIndex(index);
+      setTimeout(() => {
+        setCopiedIndex(null);
+      }, 2000);
+    }
+  };
+
+  // Use suggested password
+  const useSuggestedPassword = (suggestedPassword) => {
+    setPassword(suggestedPassword);
+  };
     const analyzePassword = async () => {
       if (!password.trim()) {
         setAnalysis(null);
