@@ -1,38 +1,178 @@
-.App {
-    text-align: center;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom animations for smooth transitions */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+@keyframes slideIn {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+/* Apply animations to analysis results */
+.analysis-result {
+  animation: fadeIn 0.3s ease-out;
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+.suggestion-item {
+  animation: slideIn 0.3s ease-out;
 }
 
-.App-link {
-    color: #61dafb;
+/* Custom styles for better visual appeal */
+.password-input:focus {
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+/* Smooth transitions for progress bar */
+.progress-bar {
+  transition: width 0.5s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+/* Hover effects for interactive elements */
+.tip-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Responsive design improvements */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .text-4xl {
+    font-size: 2.5rem;
+  }
+  
+  .text-2xl {
+    font-size: 1.5rem;
+  }
+}
+
+/* Loading animation */
+.spinner {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #3498db;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Accessibility improvements */
+.focus-visible:focus {
+  outline: 2px solid #4f46e5;
+  outline-offset: 2px;
+}
+
+/* Enhanced button styles */
+.btn-primary {
+  @apply bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+}
+
+/* Card hover effects */
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* Strength indicator styles */
+.strength-weak {
+  @apply text-red-600 bg-red-50 border-red-200;
+}
+
+.strength-moderate {
+  @apply text-yellow-600 bg-yellow-50 border-yellow-200;
+}
+
+.strength-strong {
+  @apply text-green-600 bg-green-50 border-green-200;
+}
+
+/* Password visibility toggle */
+.password-toggle {
+  @apply absolute right-3 top-3 text-gray-500 hover:text-gray-700 cursor-pointer transition-colors duration-200;
+}
+
+/* Criteria checklist styles */
+.criteria-met {
+  @apply text-green-600;
+}
+
+.criteria-not-met {
+  @apply text-red-600;
+}
+
+/* Suggestion list styles */
+.suggestion-list {
+  @apply space-y-2;
+}
+
+.suggestion-item {
+  @apply flex items-start space-x-2 p-2 bg-gray-50 rounded-lg;
+}
+
+/* Responsive grid improvements */
+@media (min-width: 1024px) {
+  .main-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none;
+  }
+  
+  .print-friendly {
+    background: white !important;
+    color: black !important;
+  }
 }
