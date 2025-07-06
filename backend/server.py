@@ -247,6 +247,8 @@ async def generate_passwords(count: int = 3):
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+@app.get("/api/password-tips")
+async def get_password_tips():
     """
     Get general password security tips
     """
